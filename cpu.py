@@ -103,6 +103,11 @@ class CPU:
         self.reg[op_a] = self.ram[self.reg[self.SP]]
         self.reg[self.SP] += 1
 
+    def pop_value(self):
+        value = self.ram[self.reg[self.SP]]
+        self.reg[self.SP] += 1 
+        return value
+
     def call(self, op_a, op_b):
         # push the address of the next instruction onto the stack
         ir = self.ram_read(self.pc)
