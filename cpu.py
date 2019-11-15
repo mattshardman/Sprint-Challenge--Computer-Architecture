@@ -80,3 +80,6 @@ class CPU:
             self.reg[reg_a] *= self.reg[reg_b]
         else:
             raise Exception("Unsupported ALU operation")
+
+    def handle_ldi(self, op_a, op_b):
+        self.reg[op_a] = op_b
