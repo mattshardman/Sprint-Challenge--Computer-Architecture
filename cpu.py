@@ -119,6 +119,14 @@ class CPU:
     def rtn(self, op_a, op_b):
         self.pc = self.pop_value()
 
+    def should_advance(self, ir):
+        if ir == CALL:
+            return False
+        elif ir == RTN:
+            return False
+        else:
+            return True
+
     def run(self):
         """Run the CPU."""
         while self.running:
@@ -129,5 +137,6 @@ class CPU:
 
             # self.branch_table[self.ir](operand_a, operand_b)
             self.branch_table(operand_a, operand_b)
-            self.pc += 1 + (self.ir >> 6)
             
+            if should_advance(self.ir):
+                self.pc += 1 + (self.ir >> 6)
