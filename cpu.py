@@ -1,5 +1,26 @@
 import sys
 
+LDI = 0b10000010
+PRN = 0b01000111 
+MUL = 0b10100010
+ADD = 0b10100000
+HLT = 0b00000001 
+PUSH = 0b01000101
+POP = 0b01000110
+CALL = 0b01010000
+RTN = 0b00010001
+CMP = 0b10100111
+JMP = 0b01010100
+JEQ = 0b01010101
+JNE = 0b01010110
+AND = 0b10101000
+OR = 0b10101010
+XOR = 0b10101011
+NOT = 0b01101001
+SHL = 0b10101100
+SHR = 0b10101101
+MOD = 0b10100010
+
 class CPU:
     def __init__(self):
         self.pc = 1
@@ -24,3 +45,25 @@ class CPU:
             if len(ln) > 0:
                 self.ram[address] = int(ln, 2)
                 address += 1
+
+    def branch_table(self, op_1, op_2):
+        if op_1 and 0b1 << 5:
+            self.alu(self.ir, op_1, op_2)
+
+        else:
+            branches = {
+                LDI: self.handle_ldi,
+                PRN: self.handle_prn,
+                HLT: self.handle_hlt,
+                PUSH: self.push,
+                POP: self.pop,
+                CALL: self.call,
+                RTN: self.rtn,
+                CMP: self.handle_cmp,
+                JMP: self.handle_jmp,
+                JEQ: self.handle_jeq,  # 85
+                JNE: self.handle_jne  # 86
+            }
+
+            branches[self.ir](op_1, op_2)
+
