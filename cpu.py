@@ -99,6 +99,14 @@ class CPU:
         self.reg[op_a] = self.ram[self.reg[self.SP]]
         self.reg[self.SP] += 1
 
+    def call(self, op_a, op_b):
+        # push the address of the next instruction onto the stack
+        ir = self.ram_read(self.pc)
+        next_address = self.pc + 1 + (ir >> 6)
+        self.push_val(next_address)
+        # move pc to subroutine address
+        self.pc = self.reg[op_a]
+
     def run(self):
         """Run the CPU."""
         while self.running:
