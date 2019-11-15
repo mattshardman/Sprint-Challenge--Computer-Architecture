@@ -111,6 +111,12 @@ class CPU:
             self.ir = JMP
             self.handle_jmp(op_a, None)
 
+    def handle_jne(self, op_a, _op_b):
+        # if flag E is 1 jmp to the address in the given register
+        if self.fl % 2 == 0:
+            self.ir = JMP
+            self.handle_jmp(op_a, None) 
+
     def push(self, op_a, _op_b):
         # decrement stack pointer
         self.reg[self.SP] -= 1
