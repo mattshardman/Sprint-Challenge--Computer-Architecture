@@ -109,6 +109,20 @@ class CPU:
             # if a > b set G flag to 1 otherwise 0
             else:
                 self.fl = 0b00000010
+        elif op == AND:
+            self.reg[reg_a] = self.reg[reg_a] and self.reg[reg_b]
+        elif op == OR:
+            self.reg[reg_a] = self.reg[reg_a] or self.reg[reg_b]
+        elif op == NOT:
+            self.reg[reg_a] = not self.reg[reg_a]
+        elif op == XOR:
+            self.reg[reg_a] = not (self.reg[reg_a] or self.reg[reg_b])
+        elif op == SHL:
+            self.reg[reg_a] = self.reg[reg_a] << self.reg[reg_b]
+        elif op == SHR:
+            self.reg[reg_a] = self.reg[reg_a] >> self.reg[reg_b]
+        elif op == MOD:
+            self.reg[reg_a] = self.reg[reg_a] % self.reg[reg_b]
         else:
             raise Exception("Unsupported ALU operation")
 
