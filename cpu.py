@@ -101,6 +101,10 @@ class CPU:
     def handle_hlt(self, _op_a, _op_b):
         self.running = False
 
+    def handle_jmp(self, op_a, _op_b):
+        # jmp to the address in the given register
+        self.pc = self.reg[op_a]
+
     def push(self, op_a, _op_b):
         # decrement stack pointer
         self.reg[self.SP] -= 1
