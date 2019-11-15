@@ -95,6 +95,10 @@ class CPU:
         self.reg[self.SP] -= 1
         self.ram[self.reg[self.SP]] = self.reg[op_a]
 
+    def push_value(self, op_a):
+        self.reg[self.SP] -= 1
+        self.ram[self.reg[self.SP]] = op_a
+
     def pop(self, op_a, _op_b):
         self.reg[op_a] = self.ram[self.reg[self.SP]]
         self.reg[self.SP] += 1
@@ -103,7 +107,7 @@ class CPU:
         # push the address of the next instruction onto the stack
         ir = self.ram_read(self.pc)
         next_address = self.pc + 1 + (ir >> 6)
-        self.push_val(next_address)
+        self.push_value(next_address)
         # move pc to subroutine address
         self.pc = self.reg[op_a]
 
