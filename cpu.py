@@ -48,21 +48,6 @@ class CPU:
                 self.ram[address] = int(ln, 2)
                 address += 1
 
-    def load_file(self, file):
-        f = open(file, "r")
-        address = 0
-        for line in f:
-            ln = ''
-            for char in line:
-                if char == '#':
-                    break
-                if char == '\n':
-                    break
-                ln += char
-            if len(ln) > 0:
-                self.ram[address] = int(ln, 2)
-                address += 1
-
     def branch_table(self, op_1, op_2):
         if self.ir & 0b1 << 5:
             self.alu(self.ir, op_1, op_2)
@@ -205,5 +190,5 @@ class CPU:
                 self.pc += 1 + (self.ir >> 6)
 
 cpu = CPU()
-cpu.load_file("/Users/matthardman/GoogleDrive/wip/cs/comp-arch/proj/ls8/examples/sprint.ls8")
+cpu.load()
 cpu.run()
