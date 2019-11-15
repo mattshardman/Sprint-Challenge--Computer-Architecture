@@ -23,10 +23,12 @@ MOD = 0b10100010
 
 class CPU:
     def __init__(self):
-        self.pc = 1
+        self.pc = 0
         self.ir = 0
+        self.running = True
         self.ram = [0] * 256
         self.reg = [0] * 8
+        self.fl = 0b00000000
 
         self.reg[7] = 0xf4
         self.sp = self.reg[7]
@@ -46,8 +48,23 @@ class CPU:
                 self.ram[address] = int(ln, 2)
                 address += 1
 
+    def load_file(self, file):
+        f = open(file, "r")
+        address = 0
+        for line in f:
+            ln = ''
+            for char in line:
+                if char == '#':
+                    break
+                if char == '\n':
+                    break
+                ln += char
+            if len(ln) > 0:
+                self.ram[address] = int(ln, 2)
+                address += 1
+
     def branch_table(self, op_1, op_2):
-        if op_1 and 0b1 << 5:
+        if self.ir & 0b1 << 5:
             self.alu(self.ir, op_1, op_2)
 
         else:
@@ -84,10 +101,10 @@ class CPU:
         elif op == CMP:
             # compare reg_a and reg_b
             # if equal set E flag to 1 otherwise 0
-            if reg_a == reg_b:
+            if self.reg[reg_a] == self.reg[reg_b]:
                 self.fl = 0b00000001
             # if a < b set L flag to 1 otherwise 0
-            elif reg_a < reg_b:
+            elif self.reg[reg_a] < self.reg[reg_b]:
                 self.fl = 0b00000100
             # if a > b set G flag to 1 otherwise 0
             else:
@@ -110,7 +127,7 @@ class CPU:
 
     def handle_jeq(self, op_a, _op_b):
         # if flag E is 1 jmp to the address in the given register
-        if self.fl % 2:
+        if self.fl % 2 != 0:
             self.ir = JMP
             self.handle_jmp(op_a, None)
 
@@ -154,6 +171,8 @@ class CPU:
             return False
         elif ir == RTN:
             return False
+        elif ir == JMP:
+            return False
         else:
             return True
 
@@ -168,8 +187,9 @@ class CPU:
             # self.branch_table[self.ir](operand_a, operand_b)
             self.branch_table(operand_a, operand_b)
             
-            if should_advance(self.ir):
+            if self.should_advance(self.ir):
                 self.pc += 1 + (self.ir >> 6)
 
 cpu = CPU()
-cpu.load().run()
+cpu.load_file("/Users/matthardman/GoogleDrive/wip/cs/comp-arch/proj/ls8/examples/sprint.ls8")
+cpu.run()
