@@ -70,3 +70,13 @@ class CPU:
 
     def ram_write(self, mar, mdr):
         self.ram[mar] = mdr
+
+    def alu(self, op, reg_a, reg_b):
+        """ALU operations."""
+        if op == ADD:
+            self.reg[reg_a] += self.reg[reg_b]
+        # elif op == "SUB": etc
+        elif op == MUL:
+            self.reg[reg_a] *= self.reg[reg_b]
+        else:
+            raise Exception("Unsupported ALU operation")
