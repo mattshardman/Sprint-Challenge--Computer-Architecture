@@ -90,6 +90,11 @@ class CPU:
     def handle_hlt(self, _op_a, _op_b):
         self.running = False
 
+    def push(self, op_a, _op_b):
+        # decrement stack pointer
+        self.reg[self.SP] -= 1
+        self.ram[self.reg[self.SP]] = self.reg[op_a]
+
     def run(self):
         """Run the CPU."""
         while self.running:
