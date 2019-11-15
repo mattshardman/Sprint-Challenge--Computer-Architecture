@@ -89,3 +89,16 @@ class CPU:
 
     def handle_hlt(self, _op_a, _op_b):
         self.running = False
+
+    def run(self):
+        """Run the CPU."""
+        while self.running:
+        # set memory at pc counter to intruction register
+            self.ir = self.ram_read(self.pc)
+            operand_a = self.ram_read(self.pc + 1)
+            operand_b = self.ram_read(self.pc + 2)
+
+            # self.branch_table[self.ir](operand_a, operand_b)
+            self.branch_table(operand_a, operand_b)
+
+            self.pc += 1 + (self.ir >> 6)
