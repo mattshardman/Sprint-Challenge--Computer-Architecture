@@ -83,3 +83,6 @@ class CPU:
 
     def handle_ldi(self, op_a, op_b):
         self.reg[op_a] = op_b
+
+    def handle_prn(self, op_a, _op_b):
+        print(self.reg[op_a])
