@@ -116,6 +116,9 @@ class CPU:
         # move pc to subroutine address
         self.pc = self.reg[op_a]
 
+    def rtn(self, op_a, op_b):
+        self.pc = self.pop_value()
+
     def run(self):
         """Run the CPU."""
         while self.running:
