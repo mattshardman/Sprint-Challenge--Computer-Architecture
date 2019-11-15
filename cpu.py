@@ -170,3 +170,6 @@ class CPU:
             
             if should_advance(self.ir):
                 self.pc += 1 + (self.ir >> 6)
+
+cpu = CPU()
+cpu.load().run()
