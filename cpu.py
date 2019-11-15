@@ -129,5 +129,5 @@ class CPU:
 
             # self.branch_table[self.ir](operand_a, operand_b)
             self.branch_table(operand_a, operand_b)
-
             self.pc += 1 + (self.ir >> 6)
+            
