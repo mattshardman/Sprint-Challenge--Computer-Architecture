@@ -59,10 +59,6 @@ class CPU:
                 POP: self.pop,
                 CALL: self.call,
                 RTN: self.rtn,
-                CMP: self.handle_cmp,
-                JMP: self.handle_jmp,
-                JEQ: self.handle_jeq,  # 85
-                JNE: self.handle_jne  # 86
             }
 
             branches[self.ir](op_1, op_2)
