@@ -95,6 +95,10 @@ class CPU:
         self.reg[self.SP] -= 1
         self.ram[self.reg[self.SP]] = self.reg[op_a]
 
+    def pop(self, op_a, _op_b):
+        self.reg[op_a] = self.ram[self.reg[self.SP]]
+        self.reg[self.SP] += 1
+
     def run(self):
         """Run the CPU."""
         while self.running:
