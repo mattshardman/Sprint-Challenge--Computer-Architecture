@@ -63,3 +63,7 @@ class CPU:
 
             branches[self.ir](op_1, op_2)
 
+    def ram_read(self, mar):
+        if mar <= len(self.ram) - 1:
+            return self.ram[mar]
+        return 0
